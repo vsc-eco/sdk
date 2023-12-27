@@ -10,7 +10,7 @@ export declare namespace console {
   function logUint8Array(arg0: Uint8Array): void
 }
 
-export declare namespace state {
+export declare namespace db {
   function setObject(key: String, val: string): void
   function getObject(key: String): string
 }
