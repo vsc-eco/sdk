@@ -1,6 +1,6 @@
 {
   "name": "@vsc.eco/sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/vsc-eco/sdk#readme",
   "dependencies": {
-    "assemblyscript": "^0.27.22"
+    "assemblyscript": "^0.27.22",
+    "assemblyscript-json": "^1.1.0"
   },
   "type": "module",
   "exports": {
