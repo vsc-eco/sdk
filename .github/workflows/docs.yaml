@@ -4,6 +4,9 @@ name: CI
 on: [push, pull_request]
 
 permissions:
+  contents: read
+  pages: write
+  deployments: write
   id-token: write
 
 
