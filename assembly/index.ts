@@ -2,6 +2,7 @@
 import { JSON } from 'assemblyscript-json/assembly'
 
 
+export * from './common'
 
 export declare namespace console {
   //@ts-ignore valid in AS
@@ -27,7 +28,31 @@ export declare namespace db {
   function getObject(key: String): string
 }
 
-export class TxOutput {
+export declare namespace SystemAPI {
+
+  //@ts-ignore
+  @external('sdk', 'getEnv')
+  function getEnv(argv0: string): string
+
+  //@ts-ignore
+  @external('sdk', 'call')
+  function call(name: string, params: string): string
+}
+
+// export declare namespace CryptoBLS {
+//   function verifySignature(msg: Uint8Array, signature: Uint8Array): boolean {
+
+//     //This would be sufficient to get result
+//     System.call('crypto.verifySignature', JSON.from({
+//       type: 'ed25519',
+//       msg,
+//       signature
+//     }).stringify())
+//   }
+// }
+
+
+export class TxOutput { 
   json: JSON.Obj
   constructor() {
       this.json = new JSON.Obj()
@@ -36,7 +61,7 @@ export class TxOutput {
   /**
    * Optional debug msg
    * @param str 
-   * @returns 
+   * 
    */
   msg(str: String): this {
       this.json.set('msg', str)
@@ -48,7 +73,7 @@ export class TxOutput {
    * Positive numbers to indicate different successful outcomes
    * Negative numbers to indicate different failed outcomes
    * @param code 
-   * @returns 
+   * @returns {TxOutput}
    */
   exitCode(code: i32): this {
       this.json.set('code', code)
@@ -58,6 +83,7 @@ export class TxOutput {
   /**
    * Response value. Must be serialized object. Can be completely arbitrary
    * @param ret 
+   * @returns {TxOutput}
    */
   ret(ret: string): this {
     this.json.set('ret', ret)
@@ -68,7 +94,7 @@ export class TxOutput {
   /**
    * Call when finished with output. 
    * String must be returned to the parent 
-   * @returns 
+   * @returns {String}
    */
   done(): String {
       return this.json.stringify()
