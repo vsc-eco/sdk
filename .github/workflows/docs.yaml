@@ -32,7 +32,5 @@ jobs:
         with:
           branch: gh-pages
           folder: docs
-      - name: Deploy to GitHub Pages
-        id: deployment
-        # https://github.com/actions/deploy-pages
-        uses: actions/deploy-pages@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
