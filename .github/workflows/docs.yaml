@@ -3,6 +3,10 @@ name: CI
 
 on: [push, pull_request]
 
+permissions:
+  id-token: write
+
+
 jobs:
   build_and_lint:
     runs-on: ubuntu-latest
