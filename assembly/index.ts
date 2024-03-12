@@ -31,11 +31,11 @@ export declare namespace db {
 export declare namespace SystemAPI {
 
   //@ts-ignore
-  @external('sdk', 'getEnv')
+  @external('sdk', 'system.getEnv')
   function getEnv(argv0: string): string
 
   //@ts-ignore
-  @external('sdk', 'call')
+  @external('sdk', 'system.call')
   function call(name: string, params: string): string
 }
 

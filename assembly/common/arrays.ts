@@ -54,7 +54,7 @@ export namespace Arrays {
      * Convert the Uint8Array `buffer` into a hexadecimal digits string. The string can optionally
      * be appended with '0x'
      */
-    export function toHexString(buffer: Uint8Array, prepend0x: bool = true): string {
+    export function toHexString(buffer: Uint8Array, prepend0x: bool = false): string {
       let output = '';
   
       if (prepend0x) {
