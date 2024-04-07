@@ -39,6 +39,40 @@ export declare namespace SystemAPI {
   function call(name: string, params: string): string
 }
 
+class ENV_DEFINITION {
+  anchor_id: string
+  anchor_height: i64
+  anchor_timestamp: i64
+  anchor_block: string
+  msg_sender: string
+  msg_required_auths: Array<string>
+  tx_origin: string
+} 
+
+export function getEnv(): ENV_DEFINITION {
+  const str =  SystemAPI.getEnv('msg.required_auths');
+  const arr = <JSON.Arr>JSON.parse(str)
+  const fullArray = arr.valueOf()
+  let itArray: Array<string> = []
+  for(let i = 0; i < fullArray.length; i++) {
+    const e = fullArray[i]
+    if(e.isString) {
+      itArray.push((<JSON.Str>e).valueOf())
+    }
+  }
+  return {
+    anchor_id: SystemAPI.getEnv('anchor.id'),
+    anchor_height: I64.parseInt(SystemAPI.getEnv('anchor.height')),
+    anchor_timestamp: I64.parseInt(SystemAPI.getEnv('anchor.timestamp')),
+    anchor_block: SystemAPI.getEnv('anchor.block'),
+    msg_sender: SystemAPI.getEnv('msg.sender'),
+    msg_required_auths: itArray,
+    tx_origin: SystemAPI.getEnv('tx.origin')
+  }
+}
+
+
+
 // export declare namespace CryptoBLS {
 //   function verifySignature(msg: Uint8Array, signature: Uint8Array): boolean {
 
