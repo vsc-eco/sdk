@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/vsc-eco/sdk#readme",
   "dependencies": {
+    "as-bigint": "^0.5.3",
     "as-bignum": "^0.3.0",
     "assemblyscript": "^0.27.22",
     "assemblyscript-json": "^1.1.0"
