@@ -33,6 +33,7 @@ export declare namespace SystemAPI {
   //@ts-ignore
   @external('sdk', 'system.getEnv')
   function getEnv(argv0: string): string
+  // TODO this should also return null if `argv0` is not in the env
 
   //@ts-ignore
   @external('sdk', 'system.call')
