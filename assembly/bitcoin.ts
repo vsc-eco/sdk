@@ -1,7 +1,6 @@
 import { u128,u256 } from 'as-bignum/assembly'
 import * as Arrays from './common/arrays'
 import { BigInt } from "as-bigint/assembly";
-import { calcKey, extractPrevBlockLE, getHeaders, extractMerkleRootLE, hash256, getStringFromJSON } from './btc-relay-utils';
 import { JSON, JSONEncoder } from "assemblyscript-json/assembly";
 import { SystemAPI, db } from '.';
 import { Crypto } from './common/crypto';
@@ -275,24 +274,6 @@ function extractMerkleRootLE(header: Uint8Array): Uint8Array {
 function hash256(preImage: Uint8Array): Uint8Array {
   return Crypto.sha256(Crypto.sha256(preImage));
 }
-
-// pla: the below implementation was the only one working for me, trying with the existing one first
-// maybe the Crypto.sha256 function needs to be updated with the code below
-
-// function sha256(param: Uint8Array): Uint8Array {
-//   const arg0Value: string = Arrays.Arrays.toHexString(param, false);
-
-//   const obj = new JSON.Obj()
-//   obj.set('arg0', arg0Value)
-
-//   const result = <JSON.Obj>JSON.parse(SystemAPI.call('crypto.sha256', obj.stringify()))
-//   if (result.getString('result')!.isString) {
-//       return Arrays.Arrays.fromHexString(result.getString('result')!.valueOf()!)
-//   } else {
-//       //Never should happen
-//       throw new Error('Crypto - incorrect binding response')
-//   }
-// }
 
 class FullProof {
   confirming_header: ConfirmingHeader | null = null
