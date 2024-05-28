@@ -1,8 +1,16 @@
 // The entry file of your WebAssembly module.
 import { JSON } from 'assemblyscript-json/assembly'
-
-
+import { Bitcoin } from './bitcoin';
 export * from './common'
+export { Bitcoin } 
+
+export function BitcoinValidateTxProof(proof: string): bool {
+  return Bitcoin.validateTxProof(proof)
+}
+
+export function BitcoinValidateTxProofWrapper(proof: Bitcoin.FullProof): bool {
+  return Bitcoin.validateTxProofWrapper(proof)
+}
 
 export declare namespace console {
   //@ts-ignore valid in AS
