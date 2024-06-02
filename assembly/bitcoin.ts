@@ -104,7 +104,7 @@ export function parseVarInt(b: Uint8Array): ParseVarIntResult {
 }
 
 
-class ExtractInputAtIndexResult {
+export class ExtractInputAtIndexResult {
   err: string | null
   result: Uint8Array | null
   constructor(err: string | null, result: Uint8Array | null) {
