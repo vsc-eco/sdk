@@ -3,6 +3,7 @@ import { Arrays, bytesToUint, typedArraysAreEqual } from './common/arrays'
 import { Base58 } from './common/base58'
 import { Base64 } from './common/base64'
 import { Crypto } from './common/crypto'
+import { db, console, SystemAPI, TxOutput } from './index'
 
 export * from './common/index'
 export * from './bitcoin'
@@ -70,4 +71,41 @@ export function ArraysBytesToUint(uint8Arr: Uint8Array): u64 {
 
 export function ArraysTypedArraysAreEqual(a: Uint8Array, b: Uint8Array): boolean {
     return typedArraysAreEqual(a, b)
+}
+
+// index exports
+export function ConsoleLog(str: string): void {
+    console.log(str)
+}
+
+export function ConsoleLogNumber(num: i64): void {
+    console.logNumber(num)
+}
+
+export function ConsoleLogBool(arg0: bool) {
+    console.logBool(arg0)
+}
+
+export function ConsoleLogUint8Array(arg0: Uint8Array) {
+    console.logUint8Array(arg0)
+}
+
+export function DbSetObject(key: string, val: string): void {
+    db.setObject(key, val)
+}
+
+export function DbGetObject(key: string): string {
+    return db.getObject(key)
+}
+
+export function SystemAPIGetEnv(argv0: string): string {
+    return SystemAPI.getEnv(argv0)
+}
+
+export function SystemAPICall(name: string, params: string): string {
+    return SystemAPI.call(name, params)
+}
+
+export function IndexGetEnv(): string {
+    return SystemAPI.getEnv('msg.required_auths')
 }
