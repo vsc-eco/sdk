@@ -40,14 +40,15 @@ export declare namespace SystemAPI {
   function call(name: string, params: string): string
 }
 
-class ENV_DEFINITION {
-  anchor_id: string
-  anchor_height: i64
-  anchor_timestamp: i64
-  anchor_block: string
-  msg_sender: string
-  msg_required_auths: Array<string>
-  tx_origin: string
+export class ENV_DEFINITION {
+  anchor_id: string = ""
+  anchor_height: i64 = 0
+  anchor_timestamp: i64 = 0
+  anchor_block: string = ""
+  msg_sender: string = ""
+  msg_required_auths: Array<string> = []
+  tx_origin: string = ""
+  contract_id:string = ""
 } 
 
 export function getEnv(): ENV_DEFINITION {
@@ -68,7 +69,8 @@ export function getEnv(): ENV_DEFINITION {
     anchor_block: SystemAPI.getEnv('anchor.block'),
     msg_sender: SystemAPI.getEnv('msg.sender'),
     msg_required_auths: itArray,
-    tx_origin: SystemAPI.getEnv('tx.origin')
+    tx_origin: SystemAPI.getEnv('tx.origin'),
+    contract_id: SystemAPI.getEnv('contract_id')
   }
 }
 
