@@ -22,7 +22,7 @@ export declare namespace console {
 export declare namespace db {
   //@ts-ignore valid in AS
   @external('sdk', 'db.setObject')
-  function setObject(key: String, val: string): void
+  function setObject(key: String, val: string | null): void
   //@ts-ignore valid in AS
   @external('sdk', 'db.getObject')
   function getObject(key: String): string
