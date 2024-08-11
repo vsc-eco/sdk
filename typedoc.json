@@ -1,0 +1,10 @@
+{
+    "entryPoints": ["assembly/index.ts"],
+    "out": "./docs",
+    "tsconfig": "assembly/tsconfig.json",
+    "skipErrorChecking": true,
+    "exclude": [
+        "assembly/bitcoin.ts",
+        "assembly/entrypoint-tests.ts"
+    ]
+  }

@@ -1,65 +1,119 @@
 // The entry file of your WebAssembly module.
-import { JSON } from 'assemblyscript-json/assembly'
+import { JSON } from 'assemblyscript-json/assembly';
 
+export * from './common';
 
-export * from './common'
-
+/**
+ * Namespace for console logging functions provided by the SDK.
+ */
 export declare namespace console {
+  /**
+   * Logs a string to the console.
+   * @param {String} arg0 - The string to log.
+   */
   //@ts-ignore valid in AS
   @external('sdk', 'console.log')
-  function log(arg0: String): void
+  function log(arg0: String): void;
+
+  /**
+   * Logs a number to the console.
+   * @param {number} arg0 - The number to log.
+   */
   //@ts-ignore valid in AS
   @external('sdk', 'console.logNumber')
-  function logNumber(arg0: number): void
+  function logNumber(arg0: number): void;
+
+  /**
+   * Logs a boolean to the console.
+   * @param {bool} arg0 - The boolean value to log.
+   */
   //@ts-ignore valid in AS
   @external('sdk', 'console.logBool')
-  function logBool(arg0: bool): void
+  function logBool(arg0: bool): void;
+
+  /**
+   * Logs a Uint8Array to the console.
+   * @param {Uint8Array} arg0 - The Uint8Array to log.
+   */
   //@ts-ignore valid in AS
   @external('sdk', 'console.logUint8Array')
-  function logUint8Array(arg0: Uint8Array): void
+  function logUint8Array(arg0: Uint8Array): void;
 }
 
+/**
+ * Namespace for database-related functions provided by the SDK.
+ */
 export declare namespace db {
+  /**
+   * Sets a key-value pair in the database.
+   * @param {String} key - The key to set.
+   * @param {string | null} val - The value to set, or null to remove the key.
+   */
   //@ts-ignore valid in AS
   @external('sdk', 'db.setObject')
-  function setObject(key: String, val: string | null): void
+  function setObject(key: String, val: string | null): void;
+
+  /**
+   * Retrieves a value from the database by its key.
+   * @param {String} key - The key to retrieve.
+   * @returns {string} The value associated with the key.
+   */
   //@ts-ignore valid in AS
   @external('sdk', 'db.getObject')
-  function getObject(key: String): string
+  function getObject(key: String): string;
 }
 
+/**
+ * Namespace for system-related functions provided by the SDK.
+ */
 export declare namespace SystemAPI {
-
+  /**
+   * Retrieves an environment variable.
+   * @param {string} argv0 - The name of the environment variable.
+   * @returns {string} The value of the environment variable.
+   */
   //@ts-ignore
   @external('sdk', 'system.getEnv')
-  function getEnv(argv0: string): string
-  // TODO this should also return null if `argv0` is not in the env
+  function getEnv(argv0: string): string;
 
+  /**
+   * Calls a system function by name with the given parameters.
+   * @param {string} name - The name of the system function to call.
+   * @param {string} params - The parameters to pass to the system function.
+   * @returns {string} The result of the system function call.
+   */
   //@ts-ignore
   @external('sdk', 'system.call')
-  function call(name: string, params: string): string
+  function call(name: string, params: string): string;
 }
 
+/**
+ * A class representing various environment properties.
+ */
 export class ENV_DEFINITION {
-  anchor_id: string = ""
-  anchor_height: i64 = 0
-  anchor_timestamp: i64 = 0
-  anchor_block: string = ""
-  msg_sender: string = ""
-  msg_required_auths: Array<string> = []
-  tx_origin: string = ""
-  contract_id:string = ""
-} 
+  anchor_id: string = "";
+  anchor_height: i64 = 0;
+  anchor_timestamp: i64 = 0;
+  anchor_block: string = "";
+  msg_sender: string = "";
+  msg_required_auths: Array<string> = [];
+  tx_origin: string = "";
+  contract_id: string = "";
+}
 
+/**
+ * Retrieves the environment variables of the current contract execution.
+ * @returns {ENV_DEFINITION} The environment definition object
+ */
 export function getEnv(): ENV_DEFINITION {
-  const str =  SystemAPI.getEnv('msg.required_auths');
-  const arr = <JSON.Arr>JSON.parse(str)
-  const fullArray = arr.valueOf()
-  let itArray: Array<string> = []
-  for(let i = 0; i < fullArray.length; i++) {
-    const e = fullArray[i]
-    if(e.isString) {
-      itArray.push((<JSON.Str>e).valueOf())
+  const str = SystemAPI.getEnv('msg.required_auths');
+  const arr = <JSON.Arr>JSON.parse(str);
+  const fullArray = arr.valueOf();
+  let itArray: Array<string> = [];
+  for (let i = 0; i < fullArray.length; i++) {
+    const e = fullArray[i];
+    if (e.isString) {
+      itArray.push((<JSON.Str>e).valueOf());
     }
   }
   return {
@@ -89,51 +143,50 @@ export function getEnv(): ENV_DEFINITION {
 // }
 
 
-export class TxOutput { 
-  json: JSON.Obj
+export class TxOutput {
+  json: JSON.Obj;
+
   constructor() {
-      this.json = new JSON.Obj()
+    this.json = new JSON.Obj();
   }
 
   /**
-   * Optional debug msg
-   * @param str 
-   * 
+   * Adds an optional debug message to the transaction output.
+   * @param {String} str - The debug message.
+   * @returns {TxOutput} The current instance for transaction chaining.
    */
   msg(str: String): this {
-      this.json.set('msg', str)
-      return this;
-  }
-
-  /**
-   * Exit code
-   * Positive numbers to indicate different successful outcomes
-   * Negative numbers to indicate different failed outcomes
-   * @param code 
-   * @returns {TxOutput}
-   */
-  exitCode(code: i32): this {
-      this.json.set('code', code)
-      return this;
-  }
-
-  /**
-   * Response value. Must be serialized object. Can be completely arbitrary
-   * @param ret 
-   * @returns {TxOutput}
-   */
-  ret(ret: string): this {
-    this.json.set('ret', ret)
+    this.json.set('msg', str);
     return this;
   }
 
+  /**
+   * Sets the exit code for the transaction output.
+   * Positive numbers indicate different successful outcomes.
+   * Negative numbers indicate different failed outcomes.
+   * @param {i32} code - The exit code.
+   * @returns {TxOutput} The current instance for chaining.
+   */
+  exitCode(code: i32): this {
+    this.json.set('code', code);
+    return this;
+  }
 
   /**
-   * Call when finished with output. 
-   * String must be returned to the parent 
-   * @returns {String}
+   * Sets the return value for the transaction output. Must be a serialized object.
+   * @param {string} ret - The return value.
+   * @returns {TxOutput} The current instance for chaining.
+   */
+  ret(ret: string): this {
+    this.json.set('ret', ret);
+    return this;
+  }
+
+  /**
+   * Finalizes the transaction output and returns it as a string.
+   * @returns {String} The finalized transaction output as a JSON string.
    */
   done(): String {
-      return this.json.stringify()
+    return this.json.stringify();
   }
 }

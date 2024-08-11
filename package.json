@@ -9,7 +9,9 @@
     "asbuild:release": "asc assembly/index.ts --target release",
     "asbuild": "npm run asbuild:debug && npm run asbuild:release",
     "start": "npx serve .",
-    "docs": "typedoc assembly/index.ts --out ./docs --tsconfig assembly/tsconfig.json --skipErrorChecking"
+    "docs": "typedoc",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "test:debug": "vite"
   },
   "repository": {
     "type": "git",
