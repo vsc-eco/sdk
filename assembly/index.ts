@@ -1,8 +1,8 @@
 // The entry file of your WebAssembly module.
 import { JSON } from 'assemblyscript-json/assembly'
-
-
+import { Bitcoin } from './bitcoin';
 export * from './common'
+export { Bitcoin }
 
 export declare namespace console {
   //@ts-ignore valid in AS
